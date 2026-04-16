@@ -1,0 +1,30 @@
+1. Leetcode problem-215: Kth Largest Element in an array
+
+import heapq
+
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        min_heap=[]
+
+        for num in nums:
+            if len(min_heap) < k:
+                heapq.heappush(min_heap,num)
+            else:
+                heapq.heappushpop(min_heap,num)
+
+        return min_heap[0]
+
+Approach:
+
+1.Brute force: Sort the array and return the kth position from the last. But the time complexity for that approach would be o(n logn) since sorting would take that time.
+2.Better Approach: Is to use a max heap. Make a max_heap with all of the numbers in the array and pop the max element k times to get the kth largest element. 
+But since constructing max_heap takes o(logn) and popping k times takes o(klogn), we get the total complexity as O(n+klogn)
+3.Optimal approach is to implement a min_heap and then make a min_heap with k elements. Always make sure, the size of min_heap is less than k. 
+When it is getting larger than k, push and element and pop an element simultaneously and finally return the top element since it will be kth maximum.
+The time com[plexity of min_hepa approach is O(nlogk) since we are iterating the array o(n) and calling pop and insert k times O(logk).
+Spce Complexity would be O(k) since we are not using heapify(it does the heap operations in place).
+
+Also, one more approach would be to use quick select algorithm. Time complexity would be O(n) but in the worst case it would be O(n^2).
+
+
+        
